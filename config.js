@@ -110,7 +110,7 @@ window.CONFIG = {
 
   /* ---------- Il player finale ---------- */
   player: {
-    appName: "Lalla's Wrapped 2026",
+   // appName: "Lalla's Wrapped 2026",
     playlistTitle: "Canzoni per Lalla",
     playlistKind: "Playlist",
     description: "Scritte e cantate solo per te.",
