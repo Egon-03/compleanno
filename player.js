@@ -49,6 +49,7 @@
   var playlistCover = null;
   var lyrics = [], lyricIdx = -1;
   var errorShownFor = -1;
+  var retried = -1;          // brano per cui abbiamo già riprovato senza cache
   var wantPlay = false;       // l'utente ha chiesto di suonare (per mostrare l'errore solo allora)
   var R = null;               // riferimenti DOM quando montato
   var dragging = false;
@@ -126,6 +127,7 @@
     st.index = i; saveState();
     loadedIndex = i;
     errorShownFor = -1;
+    retried = -1;
     audio.src = songs[i].src;
     try { audio.load(); } catch (e) { /* niente */ }
     lyrics = []; lyricIdx = -1;
@@ -178,6 +180,18 @@
 
   function onError() {
     if (loadedIndex < 0 || !audio.getAttribute('src')) return;
+    // Primo errore su questo brano: riprova una volta saltando la cache del browser
+    // (es. un "file non trovato" memorizzato prima che il file fosse pubblicato)
+    if (retried !== loadedIndex) {
+      retried = loadedIndex;
+      audio.src = songs[loadedIndex].src + '?r=' + Date.now();
+      try { audio.load(); } catch (e) { /* niente */ }
+      if (wantPlay) {
+        var p = audio.play();
+        if (p && p.catch) p.catch(function (err) { if (err && (err.name === 'AbortError' || err.name === 'NotAllowedError')) return; onError(); });
+      }
+      return;
+    }
     if (!wantPlay || errorShownFor === loadedIndex) return;
     errorShownFor = loadedIndex;
     U.toast(P.errorMessage, 4200);
