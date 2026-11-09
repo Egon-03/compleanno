@@ -87,6 +87,7 @@ e apri `http://localhost:8000`. (Il server di Python non permette di trascinare 
 ## 5. Strumenti per i test
 
 - **`?debug=1`** → aggiungilo all'indirizzo (`…/nome-repo/?debug=1`). In alto a destra compare un 🐞: toccandolo si apre un menu per saltare a qualsiasi schermata (lucchetto, giochi, pacchi, finale, player) e un pulsante `reset`.
+- **`?vai=canzoni`** → apre direttamente il player con le canzoni, senza lucchetto né giochi (`…/nome-repo/?vai=canzoni`). Funziona anche con il nome di qualsiasi schermata, es. `?vai=memory`. Non modifica il progresso salvato.
 - **`?reset=1`** → apre il sito cancellando tutto il progresso e riparte dal lucchetto.
 - **Reset segreto**: 5 tocchi rapidi sul cuoricino 🤍 nel footer ("fatto con 🤍 da Egon"). Cancella il progresso e torna al lucchetto.
 
@@ -102,6 +103,6 @@ Come funziona il salvataggio: il progresso resta nel browser. Se lei ricarica la
 - [ ] Bloccato lo schermo durante una canzone: titolo e cover compaiono sulla schermata di blocco e i controlli funzionano.
 - [ ] I pacchi fisici sono numerati 1, 2, 3 nell'ordine giusto.
 - [ ] **Reset finale** fatto su ogni dispositivo che userà lei (oppure aprendo una volta il link con `?reset=1`), così parte dal lucchetto.
-- [ ] Il link che le mandi è quello pulito, `https://<tuo-utente>.github.io/<nome-repo>/` — **senza `?debug=1`** e senza `?reset=1`.
+- [ ] Il link che le mandi è quello pulito, `https://<tuo-utente>.github.io/<nome-repo>/` — **senza `?debug=1`**, `?vai=…` o `?reset=1`.
 
 Buon compleanno a Lalla 🎂

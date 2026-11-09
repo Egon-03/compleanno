@@ -266,7 +266,7 @@
     if (!SCREENS[name]) name = 'lock';
     var def = SCREENS[name];
 
-    if (name !== 'lock') { state.screen = name; save(); }
+    if (name !== 'lock' && !opts.noSave) { state.screen = name; save(); }
 
     var old = currentEl, oldCleanup = currentCleanup;
     var screen = U.el('section', { class: 'screen' + (def.wide ? ' screen-wide' : ''), 'data-screen': name });
@@ -665,6 +665,12 @@
 
     initPetals();
     initFooter();
+
+    // Scorciatoia per i test: ?vai=canzoni apre direttamente il player
+    // (accetta anche il nome di qualsiasi schermata, es. ?vai=memory) senza toccare il progresso salvato
+    var jump = params.get('vai');
+    if (jump === 'canzoni') jump = 'player';
+    if (jump && SCREENS[jump]) { goTo(jump, { instant: true, noSave: true }); return; }
 
     var unlocked = sessionGet(SESSION_KEY) === '1';
     if (unlocked && state.screen && state.screen !== 'lock') goTo(state.screen, { instant: true });
