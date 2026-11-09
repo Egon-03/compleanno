@@ -70,8 +70,9 @@ Salvalo come `lyrics/canzone1.lrc` / `lyrics/canzone2.lrc`. Nel player a schermo
 1. Su GitHub il repository deve essere **pubblico** (con un account gratuito Pages funziona solo sui repo pubblici).
 2. Carica tutti i file sul branch `main` (anche foto, mp3 e cover).
 3. Vai su **Settings → Pages**.
-4. In "Build and deployment" scegli **Source: Deploy from a branch**, poi **Branch: `main`** e cartella **`/ (root)`**, e premi **Save**.
-5. Dopo uno o due minuti il sito è online su `https://<tuo-utente>.github.io/<nome-repo>/`.
+4. In "Build and deployment" scegli **Source: GitHub Actions**. La pubblicazione la fa il file `.github/workflows/pages.yml` che è già nel repository: parte da solo a ogni caricamento su `main`.
+   (In alternativa puoi scegliere **Deploy from a branch** → `main` → `/ (root)`: funziona lo stesso, senza bisogno del workflow.)
+5. Dopo uno o due minuti il sito è online su `https://<tuo-utente>.github.io/<nome-repo>/`. Lo stato della pubblicazione si vede nella scheda **Actions** (pallino verde = online).
 
 Ogni volta che carichi una modifica, il sito si aggiorna da solo in un paio di minuti. Se sull'iPhone vedi ancora la versione vecchia, ricarica la pagina tenendo premuto il tasto di ricarica di Safari.
 
