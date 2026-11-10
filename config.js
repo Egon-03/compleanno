@@ -123,8 +123,8 @@ window.CONFIG = {
   },
 
   songs: [
-    { title: "Canzone per Lalla", artist: "Egon & i Pinguini", src: "audio/canzone1.mp3", cover: "cover/cover1.jpg", lyrics: "lyrics/canzone1.lrc" },
-    { title: "Ventitré",          artist: "Egon & i Pinguini", src: "audio/canzone2.mp3", cover: "cover/cover2.jpg", lyrics: "lyrics/canzone2.lrc" }
+    { title: "Lalla", artist: "Egon & PTN", src: "audio/canzone1.mp3", cover: "cover/cover1.jpg", lyrics: "lyrics/canzone1.lrc" },
+    { title: "Ventitré",          artist: "Egon & PTN", src: "audio/canzone2.mp3", cover: "cover/cover2.jpg", lyrics: "lyrics/canzone2.lrc" }
     // Facoltativo: aggiungi duration: "3:24" a un brano se la durata non compare sull'iPhone prima di premere play
   ]
 };
