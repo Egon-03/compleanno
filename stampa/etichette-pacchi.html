@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@500;600&family=Playfair+Display:ital,wght@0,600;0,700;1,500&display=block">
+<style>
+@page { size: A4; margin: 0; }
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { width: 210mm; height: 297mm; padding: 11mm 10mm; display: flex; flex-direction: column; justify-content: space-between; background: #fff;
+  -webkit-print-color-adjust: exact; print-color-adjust: exact; font-family: 'Inter', sans-serif; }
+.cut { position: relative; height: 0; border-top: 0.35mm dashed #c9b7ba; margin: 0 -4mm; }
+.cut span { position: absolute; left: 0; top: -2.6mm; font-size: 3.6mm; color: #b9a3a7; background: #fff; padding-right: 1mm; line-height: 1; }
+.card { position: relative; height: 84mm; border-radius: 6mm; overflow: hidden;
+  background: radial-gradient(120mm 70mm at 0% 0%, #f6e3e6 0%, transparent 70%), radial-gradient(90mm 60mm at 100% 100%, #f1e6cc 0%, transparent 70%), #fdf8f1;
+  border: 0.6mm solid #c9a961; display: flex; align-items: center; }
+.card::before { content: ''; position: absolute; inset: 2.6mm; border: 0.3mm solid rgba(201,169,97,.65); border-radius: 4mm; pointer-events: none; }
+.ribbon { position: absolute; top: 0; bottom: 0; left: 58mm; width: 9mm; background: linear-gradient(90deg, #5e1828, #7d2537 45%, #6b1e2e); }
+.ribbon::after { content: ''; position: absolute; inset: 0 3.6mm; background: rgba(255,255,255,.08); }
+.medal { position: relative; z-index: 2; margin-left: 19mm; width: 87mm; height: 64mm; display: flex; align-items: center; justify-content: center; }
+.medal .ring { width: 56mm; height: 56mm; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fffdf8, #f6e6e8 70%);
+  border: 1.6mm solid #c9a961; box-shadow: 0 0 0 0.6mm #fdf8f1, 0 0 0 1.2mm #e8d7a8, 0 1.5mm 4mm rgba(107,30,46,.18);
+  display: flex; align-items: center; justify-content: center; }
+.medal .num { font-family: 'Playfair Display', Georgia, serif; font-weight: 700; font-size: 40mm; line-height: 1; color: #6b1e2e; margin-top: -3mm; }
+.text { position: relative; z-index: 2; flex: 1; padding: 0 12mm 0 4mm; text-align: center; }
+.kicker { font-size: 3.6mm; letter-spacing: .5em; text-transform: uppercase; color: #b06775; font-weight: 600; margin-left: .5em; }
+.title { font-family: 'Playfair Display', Georgia, serif; font-weight: 600; font-size: 13mm; color: #6b1e2e; margin: 1.5mm 0 1mm; line-height: 1.05; }
+.title .deg { font-size: .42em; vertical-align: .95em; text-decoration: underline; text-decoration-thickness: .06em; text-underline-offset: .12em; margin: 0 .04em 0 .02em; }
+.orn { color: #c9a961; letter-spacing: .6em; font-size: 3mm; margin: 2mm 0 2.5mm .6em; }
+.for { font-family: 'Caveat', cursive; font-weight: 700; font-size: 10.5mm; color: #8a2f45; line-height: 1; display: inline-flex; align-items: center; gap: 2mm; }
+.for svg { width: 6.5mm; height: 6.5mm; fill: #c9848f; }
+.note { font-size: 3.4mm; color: #8a7277; margin-top: 3.5mm; }
+.heart { position: absolute; fill: #c9848f; opacity: .35; }
+</style></head><body>
+<script>
+const H = '<path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>';
+const notes = ['Aprimi solo quando te lo dice il sito ✨', 'Aprimi solo quando te lo dice il sito ✨', 'Aprimi solo quando te lo dice il sito ✨'];
+let html = '';
+[1,2,3].forEach((n, i) => {
+  if (i) html += '<div class="cut"><span>✂</span></div>';
+  html += `<div class="card">
+    <div class="ribbon"></div>
+    <svg class="heart" viewBox="0 0 24 24" style="width:7mm;right:9mm;top:8mm">${H}</svg>
+    <svg class="heart" viewBox="0 0 24 24" style="width:4.5mm;right:17mm;top:15mm;opacity:.25">${H}</svg>
+    <svg class="heart" viewBox="0 0 24 24" style="width:5mm;right:10mm;bottom:9mm;opacity:.25">${H}</svg>
+    <div class="medal"><div class="ring"><div class="num">${n}</div></div></div>
+    <div class="text">
+      <div class="kicker">Sorpresa</div>
+      <div class="title">Pacco n<span class="deg">o</span>&#8202;${n}</div>
+      <div class="orn">✦ ✦ ✦</div>
+      <div class="for">Per Lalla <svg viewBox="0 0 24 24">${H}</svg></div>
+      <div class="note">${notes[i]}</div>
+    </div>
+  </div>`;
+});
+document.body.innerHTML = html;
+</script>
+</body></html>
