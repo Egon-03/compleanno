@@ -7,64 +7,46 @@
 html, body { margin: 0; }
 body { width: 210mm; height: 297mm; padding-top: 22mm; background: #fff; font-family: 'Inter', sans-serif;
   -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-.row { display: flex; justify-content: center; gap: 12mm; }
-svg.tag { width: 56mm; height: 90mm; overflow: visible; filter: drop-shadow(0 .5mm 1mm rgba(107,30,46,.10)); }
-.hint { text-align: center; margin-top: 9mm; font-size: 3.1mm; color: #a8979a; letter-spacing: .02em; }
+.row { display: flex; justify-content: center; gap: 10mm; }
+svg.tag { width: 58mm; height: 58mm; overflow: visible; }
+.hint { text-align: center; margin-top: 8mm; font-size: 3.1mm; color: #a8979a; }
 .serif { font-family: 'Playfair Display', Georgia, serif; }
 .script { font-family: 'Caveat', cursive; }
 .num { font-variant-numeric: lining-nums; font-feature-settings: "lnum" 1; }
 </style></head><body>
 <div class="row" id="row"></div>
-<p class="hint">✂ Ritaglia lungo il bordo dorato · fora il cerchietto in alto e fai passare un nastrino</p>
+<p class="hint">✂ Ritaglia lungo il bordo dorato e incolla sopra il pacco (colla stick o biadesivo)</p>
 <script>
-const W = 56, H = 90, C = 10, R = 4;
-const outer = `M${C},0 L${W-C},0 L${W},${C} L${W},${H-R} Q${W},${H} ${W-R},${H} L${R},${H} Q0,${H} 0,${H-R} L0,${C} Z`;
-const d = 3, k = 1.24;
-const inner = `M${C+k},${d} L${W-C-k},${d} L${W-d},${C+k} L${W-d},${H-d-2.5} Q${W-d},${H-d} ${W-d-2.5},${H-d} L${d+2.5},${H-d} Q${d},${H-d} ${d},${H-d-2.5} L${d},${C+k} Z`;
+const S = 58, c = 29;
 const heart = 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z';
+const arc = (r, sweep) => `M${c - r},${c} A${r},${r} 0 0 ${sweep} ${c + r},${c}`;
 function tag(n) {
   const id = 't' + n;
-  return `<svg class="tag" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">
+  return `<svg class="tag" viewBox="0 0 ${S} ${S}" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="${id}bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fbeef0"/><stop offset=".55" stop-color="#fdf8f1"/><stop offset="1" stop-color="#f6ecd6"/></linearGradient>
-    <radialGradient id="${id}disc" cx=".38" cy=".32" r=".75"><stop offset="0" stop-color="#fffdf9"/><stop offset="1" stop-color="#f4dfe2"/></radialGradient>
-    <linearGradient id="${id}gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e6cd8f"/><stop offset=".5" stop-color="#c29a4e"/><stop offset="1" stop-color="#e2c98a"/></linearGradient>
-    <linearGradient id="${id}rib" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5a1726"/><stop offset=".45" stop-color="#7d2537"/><stop offset="1" stop-color="#5e1828"/></linearGradient>
-    <pattern id="${id}pat" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(-12)">
-      <path d="${heart}" transform="translate(1.5 1.5) scale(.11)" fill="#c9848f" opacity=".16"/>
-      <path d="${heart}" transform="translate(6 6) scale(.08)" fill="#c9a961" opacity=".22"/>
+    <linearGradient id="${id}bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fbecef"/><stop offset=".55" stop-color="#fdf8f1"/><stop offset="1" stop-color="#f5e9d2"/></linearGradient>
+    <linearGradient id="${id}gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e8cf92"/><stop offset=".5" stop-color="#bf974b"/><stop offset="1" stop-color="#e4cb8c"/></linearGradient>
+    <pattern id="${id}pat" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(-12)">
+      <path d="${heart}" transform="translate(1.2 1.2) scale(.1)" fill="#c9848f" opacity=".15"/>
+      <path d="${heart}" transform="translate(5.3 5.3) scale(.075)" fill="#c9a961" opacity=".22"/>
     </pattern>
-    <clipPath id="${id}clip"><path d="${outer}"/></clipPath>
+    <radialGradient id="${id}glow"><stop offset="0" stop-color="#fffdf9" stop-opacity=".95"/><stop offset=".7" stop-color="#fffdf9" stop-opacity=".8"/><stop offset="1" stop-color="#fffdf9" stop-opacity="0"/></radialGradient>
+    <path id="${id}top" d="${arc(21.6, 1)}"/>
+    <path id="${id}bot" d="${arc(24.4, 0)}"/>
   </defs>
-  <path d="${outer}" fill="url(#${id}bg)"/>
-  <path d="${outer}" fill="url(#${id}pat)"/>
-  <g clip-path="url(#${id}clip)">
-    <rect x="0" y="40.2" width="${W}" height="5.6" fill="url(#${id}rib)"/>
-    <rect x="0" y="41.6" width="${W}" height=".35" fill="#fff" opacity=".18"/>
-    <rect x="0" y="44.1" width="${W}" height=".35" fill="#fff" opacity=".18"/>
-  </g>
-  <path d="${outer}" fill="none" stroke="url(#${id}gold)" stroke-width=".7"/>
-  <path d="${inner}" fill="none" stroke="#c9a961" stroke-width=".25" opacity=".85"/>
-  <!-- occhiello -->
-  <circle cx="28" cy="8.6" r="3.7" fill="#fdf8f1" stroke="url(#${id}gold)" stroke-width="1.1"/>
-  <circle cx="28" cy="8.6" r="2.2" fill="#fff" stroke="#c9a961" stroke-width=".2" stroke-dasharray=".6 .5"/>
-  <!-- intestazione -->
-  <text x="28" y="20.6" text-anchor="middle" font-family="Inter" font-weight="600" font-size="2.35" letter-spacing="1.35" fill="#b06775">PACCO</text>
-  <g fill="#c9a961" opacity=".9"><rect x="12.6" y="19.75" width="5" height=".22"/><rect x="38.4" y="19.75" width="5" height=".22"/></g>
-  <!-- medaglione -->
-  <circle cx="28" cy="43" r="17.6" fill="none" stroke="#e8d7a8" stroke-width=".35"/>
-  <circle cx="28" cy="43" r="16.2" fill="url(#${id}disc)" stroke="url(#${id}gold)" stroke-width="1.3"/>
-  <circle cx="28" cy="43" r="14.3" fill="none" stroke="#c9a961" stroke-width=".18" opacity=".7"/>
-  <text x="28" y="31.6" text-anchor="middle" class="serif" font-style="italic" font-weight="500" font-size="3.1" fill="#b06775">nº</text>
-  <text x="28.4" y="54.6" text-anchor="middle" class="serif num" font-weight="700" font-size="27" fill="#6b1e2e">${n}</text>
-  <!-- dedica -->
-  <text x="28" y="70.2" text-anchor="middle" class="script" font-weight="700" font-size="8" fill="#8a2f45">Per Lalla</text>
-  <g transform="translate(28 74.4)">
-    <rect x="-11" y="-.12" width="8.6" height=".24" fill="#c9a961"/><rect x="2.4" y="-.12" width="8.6" height=".24" fill="#c9a961"/>
-    <path d="${heart}" transform="translate(-1.5 -1.45) scale(.125)" fill="#c9848f"/>
-  </g>
-  <text x="28" y="79.6" text-anchor="middle" font-family="Inter" font-weight="500" font-size="2.15" fill="#8a7277">aprimi solo quando</text>
-  <text x="28" y="82.6" text-anchor="middle" font-family="Inter" font-weight="500" font-size="2.15" fill="#8a7277">te lo dice il sito ✨</text>
+  <circle cx="${c}" cy="${c}" r="28.6" fill="url(#${id}bg)"/>
+  <circle cx="${c}" cy="${c}" r="28.6" fill="url(#${id}pat)"/>
+  <circle cx="${c}" cy="${c}" r="28.6" fill="none" stroke="url(#${id}gold)" stroke-width="1"/>
+  <circle cx="${c}" cy="${c}" r="26.6" fill="none" stroke="#c9a961" stroke-width=".25"/>
+  <circle cx="${c}" cy="${c}" r="20" fill="url(#${id}glow)"/>
+  <text font-family="Inter" font-weight="600" font-size="2.5" letter-spacing=".75" fill="#b06775">
+    <textPath href="#${id}top" startOffset="50%" text-anchor="middle">✦ SORPRESA ✦</textPath></text>
+  <text font-family="Inter" font-weight="500" font-size="2.05" letter-spacing=".15" fill="#8a7277">
+    <textPath href="#${id}bot" startOffset="50%" text-anchor="middle">aprimi solo quando te lo dice il sito</textPath></text>
+  <text x="${c}" y="17.6" text-anchor="middle" class="serif" font-style="italic" font-weight="500" font-size="3.4" fill="#b06775">pacco nº</text>
+  <text x="${c + .3}" y="38.4" text-anchor="middle" class="serif num" font-weight="700" font-size="21" fill="#6b1e2e">${n}</text>
+  <text x="${c}" y="45" text-anchor="middle" class="script" font-weight="700" font-size="5.4" fill="#8a2f45">Per Lalla</text>
+  <path d="${heart}" transform="translate(${c - 1.15} 46.2) scale(.095)" fill="#c9848f"/>
 </svg>`;
 }
 document.getElementById('row').innerHTML = [1,2,3].map(tag).join('');
